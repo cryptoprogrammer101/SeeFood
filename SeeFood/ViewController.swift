@@ -14,6 +14,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
 //    create an outlet for the image view
     @IBOutlet weak var imageView: UIImageView!
+
+//    create an outlet for the confidence label
+    @IBOutlet weak var confidenceLabel: UILabel!
     
 //    create a UIImagePickerController object, which manages taking pictures
     let imagePicker = UIImagePickerController()
@@ -61,6 +64,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 //            set the image of the imageView equal to the photo the user just took
             imageView.image = userPickedImage
             
+//            create a constant called "ciimage" (Core Image image) from the standard UIImage "userPickedImage"
+//            use a guard-let statement to make sure the CIImage is created, and will throw an error if CIImage creation is unsuccessful
+            guard let ciimage = CIImage(image: userPickedImage) else {fatalError("Could not convert UIImage to CIImage")}
+            
+//            detect the image
+            detect(ciimage)
+            
+            
         }
         
 //        once the image has been retrieved, dismiss the image picker
@@ -68,6 +79,75 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
         
+//    create a function to process the image
+    func detect(_ image: CIImage) {
+        
+//        create a model for the machine learning
+        
+//        set "model" equal to the VNCoreMLModel, which acts as a container for the CoreML Model (which in this case is called Inceptionv3)
+//        create the VNCoreMLModel object from the Inceptionv3 ML Model
+        
+//        VNCoreMLModel comes from the Vision framework
+        
+//        creating the VNCoreMLModel can result in an error, so the try? keyword tries to complete the task
+//        however, try? returns an optional, so using a guard-let will throw an error if creating the VNCoreMLModel fails, as there is no point to move ob
+        guard let model = try? VNCoreMLModel(for: Inceptionv3().model) else {fatalError("Loading CoreML model failed")}
+        
+//        create a Vision CoreML request from the model we made earlier
+//        the request also provides a completion handler
+        let request = VNCoreMLRequest(model: model) { (request, error) in
+            
+//            here, we want to process the results of the request
+//            optionally downcast the results from [Any]? to [VNClassificationObservation]
+            
+//            put this in a guard-let statement since the code must stop if the results are not able to be retrieved
+            guard let results = request.results as? [VNClassificationObservation] else {fatalError("Model failed to process image")}
+            
+//            create a variable for the first (and most accurate) object found
+            if let firstResult = results.first {
+
+//                let topTwoResults = results.prefix(2)
+                
+//                uses the topTwoResults to convert [VNClassificationObservation] to [(confidence: VNConfidence, identifier: String)]
+                
+//                $0 always refers to the first parameter of a closure, which in the case of the "map" function, simply refers to each of the top two results
+//                $1 refers to the second parameter, etc.
+                
+//                set the confidence property of each of the tuples equal to the confidence property of each of the top two results
+//                set the identifier property of each of the tuples equal to the identifier property of each of the top two results
+                
+//                map essentially creates a new list by looping through another list
+                
+//                let formattedResults = topTwoResults.map { (confidence: $0.confidence, identifier: $0.identifier) }
+
+//                display the most accurate item found  in the navigation bar
+                self.navigationItem.title = results.first?.identifier
+                
+                self.confidenceLabel.text = "Confidence level: \(firstResult.confidence * 100)%"
+                
+            }
+            
+        }
+        
+//        create a handler to specify what image must be processed
+//        use "image" as the image that needs to be passed in
+        let handler = VNImageRequestHandler(ciImage: image)
+        
+//        try to
+        do {
+            
+//            try to perform a request with the request that was made earlier
+            try handler.perform([request])
+            
+//        if there are errors
+        } catch {
+            
+//            print out the results
+            print("Failed to perform request, \(error)")
+        }
+        
+    }
+    
 //    if the camera button is tapped
     @IBAction func cameraTapped(_ sender: UIBarButtonItem) {
         
