@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F9E6F99D2492FD9100745B30 /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = F9E6F99C2492FD9100745B30 /* Inceptionv3.mlmodel */; };
 		F9EADCE22492F78D00C3526F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EADCE12492F78D00C3526F /* AppDelegate.swift */; };
 		F9EADCE42492F78D00C3526F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EADCE32492F78D00C3526F /* SceneDelegate.swift */; };
 		F9EADCE62492F78D00C3526F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EADCE52492F78D00C3526F /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F9E6F99C2492FD9100745B30 /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
 		F9EADCDE2492F78D00C3526F /* SeeFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeeFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9EADCE12492F78D00C3526F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9EADCE32492F78D00C3526F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				F9EADCEA2492F79100C3526F /* Assets.xcassets */,
 				F9EADCEC2492F79100C3526F /* LaunchScreen.storyboard */,
 				F9EADCEF2492F79100C3526F /* Info.plist */,
+				F9E6F99C2492FD9100745B30 /* Inceptionv3.mlmodel */,
 			);
 			path = SeeFood;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9EADCE62492F78D00C3526F /* ViewController.swift in Sources */,
+				F9E6F99D2492FD9100745B30 /* Inceptionv3.mlmodel in Sources */,
 				F9EADCE22492F78D00C3526F /* AppDelegate.swift in Sources */,
 				F9EADCE42492F78D00C3526F /* SceneDelegate.swift in Sources */,
 			);
